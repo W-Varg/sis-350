@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+{% block content %}
+	<table>
+		<thead>
+			<tr>
+				<td>#</td>
+				<td>nombre</td>
+				<td>categoria</td>
+				<td>cantidad</td>
+				<td>precio unidad</td>
+				<td> imagen</td>
+				<td>Accciones</td>
+			</tr>
+		</thead>
+		<tbody>
+		{% if object_list %} 
+		{% for producto in object_list %} 
+			<tr>
+				<td>{{ producto.id }}</td>
+				<td>{{ producto.nombre_producto }}</td>
+				<td>{{ producto.IDcategoria }}</td>
+				<td>{{ producto.cantidad }}</td>
+				<td>{{ producto.precio_por_unidad }}</td>
+				<td></td>
+				<td>
+					<a class="btn btn-primary" href="#">Editar</a>
+					<a class="btn btn-danger" href="#">eliminar</a>
+				</td>
+				
+			</tr>
+		{% endfor %}
+		{% else %}
+			<h1>no hay registros</h1>
+		{% endif %}
+		</tbody>
+	</table>
+
+
+{% endblock %}
