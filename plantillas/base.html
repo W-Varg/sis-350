@@ -2,111 +2,181 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <!--meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no, minimun-scale=1.0"-->
-
+    <meta charset="utf-8"><meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no, minimun-scale=1.0">
       <!-- Bootstrap -->
-    <link rel="stylesheet" href="{% static 'bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
 
-  <title>{% block title %} base {% endblock %}</title>
+    <title>{% block title %} base {% endblock %}</title>
 
 </head>
-<body>
-    {% block navbar %}
-
-    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-    <script src=" {% static 'jquery-3.2.1.js' %}"  ></script>
-    <!-- Include all compiled plugins (below), or include individual files as needed -->
-    <script src="{% static 'bootstrap.min.js' %}"></script>
-
-
+<body >
+{% block navbar %}
   <nav class="navbar navbar-default navbar-inverse" role="navigation">
   <div class="container-fluid">
-    <!-- Brand and toggle get grouped for better mobile display -->
     <div class="navbar-header">
-      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-        <span class="sr-only">Toggle navigation</span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </button>
-      <a class="navbar-brand" href="#">Login dropdown</a>
+      <a class="navbar-brand" href="#"><span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span> Compra y venta en Bolvia</a>
     </div>
-
-    <!-- Collect the nav links, forms, and other content for toggling -->
-    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-      <ul class="nav navbar-nav">
-        <li class="active"><a href="#">Link</a></li>
-        <li><a href="#">Link</a></li>
-        <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <span class="caret"></span></a>
-          <ul class="dropdown-menu" role="menu">
-            <li><a href="#">Action</a></li>
-            <li><a href="#">Another action</a></li>
-            <li><a href="#">Something else here</a></li>
-            <li class="divider"></li>
-            <li><a href="#">Separated link</a></li>
-            <li class="divider"></li>
-            <li><a href="#">One more separated link</a></li>
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+          <ul class="nav navbar-nav">
+            <li class="active" ><a href="{% url 'index:Index' %}"><span class="glyphicon glyphicon-home" aria-hidden="true"></span>  Home</a></li>
+            <li><a href="https://docs.djangoproject.com/es/1.11"><span class="glyphicon glyphicon-inbox" aria-hidden="true"></span>  Django</a></li>
           </ul>
-        </li>
-      </ul>
-      <form class="navbar-form navbar-left" role="search">
-        <div class="form-group">
-          <input type="text" class="form-control" placeholder="Search">
-        </div>
-        <button type="submit" class="btn btn-default">Submit</button>
-      </form>
-      <ul class="nav navbar-nav navbar-right">
-        <li><p class="navbar-text">Already have an account?</p></li>
-        <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown"><b>Login</b> <span class="caret"></span></a>
-      <ul id="login-dp" class="dropdown-menu">
-        <li>
-           <div class="row">
-              <div class="col-md-12">
-                Login via
-                <div class="social-buttons">
-                  <a href="#" class="btn btn-fb"><i class="fa fa-facebook"></i> Facebook</a>
-                  <a href="#" class="btn btn-tw"><i class="fa fa-twitter"></i> Twitter</a>
-                </div>
-                                or
-                 <form class="form" role="form" method="post" action="login" accept-charset="UTF-8" id="login-nav">
-                    <div class="form-group">
-                       <label class="sr-only" for="exampleInputEmail2">Email address</label>
-                       <input type="email" class="form-control" id="exampleInputEmail2" placeholder="Email address" required>
-                    </div>
-                    <div class="form-group">
-                       <label class="sr-only" for="exampleInputPassword2">Password</label>
-                       <input type="password" class="form-control" id="exampleInputPassword2" placeholder="Password" required>
-                                             <div class="help-block text-right"><a href="">Forget the password ?</a></div>
-                    </div>
-                    <div class="form-group">
-                       <button type="submit" class="btn btn-primary btn-block">Sign in</button>
-                    </div>
-                    <div class="checkbox">
-                       <label>
-                       <input type="checkbox"> keep me logged-in
-                       </label>
-                    </div>
-                 </form>
+          <form class="navbar-form navbar-left" role="search">
+            {% csrf_token %}
+              <div class="form-group">
+                <input type="text" class="form-control" placeholder="Buscar">
               </div>
-              <div class="bottom text-center">
-                New here ? <a href="#"><b>Join Us</b></a>
-              </div>
-           </div>
-        </li>
-      </ul>
-        </li>
-      </ul>
-    </div><!-- /.navbar-collapse -->
+              <button type="submit" class="btn btn-default">Enviar</button>
+          </form>
+
+          <ul class="nav navbar-nav navbar-right">
+            {% if user.is_authenticated %}
+                <!-- menu despegable con opciones-->
+                <li class="dropdown">
+                  <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span> opciones <span class="caret"></span></a>
+                  <ul class="dropdown-menu" role="menu">
+                    <li class="divider"></li>
+                    <li><a href=""> mi perfil</a></li>
+                    <li class="divider"></li>
+                    <li><a href="{% url 'productos:listar_producto' %}">Mi lista de productos</a></li>
+                    <li><a href="{% url 'productos:crear_producto' %}">Publicar un Producto</a></li>
+                    <li class="divider"></li>
+                    <li><a href="">Reportes</a></li>
+                  </ul>
+                </li>
+                <li><a href=""><span class="glyphicon glyphicon-user" aria-hidden="true"></span> :{{ user.username|capfirst }}</a></li>
+                <li><a href="{% url 'index:logout' %}"><span class="glyphicon glyphicon-log-out"></span> Salir</a></li>
+
+            {% else %}
+                <li><a href="{% url 'registrar_user:registrar' %}" class="dropdown-toggle" > registrarse</a></li>
+                  <!--a class="dropdown-toggle" data-toggle="modal" data-target="#ModalRegistrarse">registrarse</a-->
+                <li><a class="dropdown-toggle" data-toggle="modal" data-target="#loginModal"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+            {% endif %}
+            
+          </ul>
+        </div><!-- /.navbar-collapse -->
   </div><!-- /.container-fluid -->
 </nav>
+<!--Modal de login -->
+<div id="loginModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"> &times;</button>
+                <h3 class="modal-title">Cuenta Personal</h3> 
+            </div>
+            <div class="modal-body">
+             <form class="form-inline" method="POST">
+                      {% csrf_token %}
+                  <div class="form-group">
+                      <label class="sr-only" for="username">nombre Usuario</label>
+                      <input type="text" class="form-control input-sm" placeholder="nombre usuario" name="username">
+                  </div>
+                  <div class="form-group">  
+                      <label class="sr-only" for="password">Contraseña</label>
+                      <input type="password" class="form-control input-sm" placeholder="Contraseña" name="password">
+                  </div>
+                  <div class="checkbox">
+                      <label><input type="checkbox">Recordar</label>
+                  </div>
+                       <button type="submit" class="btn btn-info btn-xs">Ingresar</button>
+                       <button type="button" class="btn btn-default btn-xs" data-dismiss="modal">Cancelar</button> 
 
-  {% endblock navbar %}
-  
+                    </form>
+            </div>
+            <div class="modal-footer">
+               <label >olvidaste tu Contraseña??</label>
+                <button type="button" class="btn btn-info badge" data-dismiss="modal">Recuperar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Registrarse -->
+<!--form action="#" method="post" id="newmember" >
+    <div class="modal fade" id="ModalRegistrarse" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+          <h4 class="modal-title" id="myModalLabel">Registrarse</h4>
+        </div>
+        <div class="modal-body form-inline">
+          <div class="form-group has-feedback">
+              <label class="control-label" for="firstnamelabel">* nombre</label>
+              <input type="text" class="form-control" placeholder="Nombre Completo" required="">
+              <span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span>
+          </div>
+          
+          <div class="form-group has-feedback">
+              <label class="control-label" for="lastnamelabel">* apellidos</label>
+              <input type="text" class="form-control" placeholder="apellidos" required="">
+              <span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span>
+          </div>
+          
+          <div class="form-group has-feedback">
+              <label class="control-label" for="emaillabel">* Email </label>
+              <input type="email" class="form-control"  placeholder="Correo electronico" required="">
+              <span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span>
+          </div>
+          <div class="form-group has-feedback">
+              <label class="control-label" for="firstnamelabel">* Nombre de usuario </label>
+              <input type="text" class="form-control" placeholder="escojase un nombre de usuario " required="">
+              <span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span>
+          </div>
+          
+          <div class="form-group has-feedback">
+              <label class="control-label" for="passwordlabel">* contraseña </label>
+              <input type="password" class="form-control"  placeholder="Contraseña" required="">
+              <span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span>
+          </div>
+          
+          <div class="form-group has-feedback">
+              <label class="control-label" for="re-enterpasswordlabel">* Repetir-contraseña</label>
+              <input type="password" class="form-control"  aria-describedby="repetir contraseña " required="">
+              <span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span>
+          </div>
+          
+          <div class="form-group has-feedback">
+              <label class="control-label" for="postcodelabel">Postcode</label>
+              <input type="text" class="form-control" id="postcodeinput" aria-describedby="postcodeinput">
+              <span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span>
+          </div>
+          
+           <div class="form-group">
+              <label class="control-label" for="postcodelabel">How did you hear about us?</label>
+              <select class="form-control">
+                  <option>- Please select -</option>
+                  <option>Email newsletter</option>
+                  <option>Fax</option>
+                  <option>Conference/Tradeshow</option>
+                  <option>Social Media</option>
+                  <option>Other</option>
+              </select>
+          </div>
+          <br/>
+          
+           <div class="form-group">
+              <button type="button" class="btn btn-primary" data-dismiss="modal">Sign up</button>
+           </div>
+          
+        </div>  <!--end modal-Body>
+        
+      </div>
+    </div>
+    </div><!-- end become a member modal >
+  </form> <!-- end Form -->
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="{% static 'js/jquery-3.2.1.js' %}" ></script>
+    <script src="{% static 'js/popper.min.js' %}"   ></script>
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+
+    {% endblock navbar %}
+
   {% block content %}
+
       <h1>contenido de la base html </h1>
   {% endblock %}
 </body>

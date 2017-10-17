@@ -15,10 +15,23 @@ Including another URLconf
 """
 from django.conf.urls import include, url
 from django.contrib import admin
+from django.views.static import serve
+from django.conf.urls.static import static
+from django.conf import settings
+
+admin.autodiscover()
 
 urlpatterns = [
 	url(r'^admin/', admin.site.urls),   
 	url(r'^', include('app_inicio.urls', namespace='index')),
     url(r'^producto/', include('app_producto.urls', namespace='productos')),
 	url(r'^registrar/', include('app_usuario.urls', namespace='registrar_user')),
+    #fotografias
+    url(r'^media/(?P<path>.*)$', serve ,{'document_root': settings.MEDIA_ROOT, } ),
 ]
+#if settings.DEBUG:
+ #   urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

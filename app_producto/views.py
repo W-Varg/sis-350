@@ -30,17 +30,17 @@ class producto_list(ListView):
 	model = Producto
 	template_name = 'producto_list.html'   #el modelo plantilla por defecto esta 
 
-"""
+
 class producto_update(UpdateView):
 	model = Producto # el modulo
 	form_class = ProductoForm  # nombre del formulario que se va a utilizar
-	template_name = 'producto_form.html'
+	template_name = 'edit_modal.html'
 	success_url = reverse_lazy('productos:listar_producto')
-
+"""
 class producto_delete(DeleteView):
 	model = Producto # el modulo
 	form_class = ProductoForm  # nombre del formulario que se va a utilizar
 	template_name = 'producto_form.html'
 	success_url =  reverse_lazy('productos:listar_producto')
-
 """
+

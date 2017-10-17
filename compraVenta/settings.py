@@ -7,7 +7,7 @@ For more information on this file, see
 https://docs.djangoproject.com/en/1.11/topics/settings/
 
 For the full list of settings and their values, see
-https://docs.djangoproject.com/en/1.11/ref/settings/
+https://docs.djangoproject.com/es/1.11/ref/settings/
 """
 
 import os
@@ -128,11 +128,25 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
 
-STATIC_URL = 'static/'
+STATIC_URL = '/static/'
 STATICFILES_DIRS = (os.path.join(BASE_DIR,'static'),)
+STATIC_ROOT = os.path.join(BASE_DIR,'static')
 
 #definimos el login
-#from django.core.urlresolvers import reverse_lazy
-#LOGIN_URL = reverse_lazy('index:login')
-#LOGIN_REDIRECT_URL = reverse_lazy('index:login')
-#LOGOUT_URL = reverse_lazy('index:logout')
+from django.core.urlresolvers import reverse_lazy
+LOGIN_URL = reverse_lazy('index:login')
+LOGIN_REDIRECT_URL = reverse_lazy('index:Index')
+LOGOUT_URL = reverse_lazy('index:logout')
+
+#Protocolas para recupera cuenta
+"""
+EMAIL_USE_TLS = True
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 25
+EMAIL_HOST_USER = 'colegioanicetoarce@gmail.com'
+EMAIL_HOST_PASSWORD = 'khyshot05'
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'"""
+
+#archivos multimedia
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
+MEDIA_URL = '/media/'

@@ -1,9 +1,58 @@
 {% extends 'base.html' %}
 
+
 {% block content %}
-	<table>
-		<thead>
-			<tr>
+<div class="container">
+	<div class="thumbnail">
+  <h2>Panel de Administracion de usuario</h2>
+  <p>detalle del usuario</p>
+  <ul class="nav nav-pills">
+    <li class="active"><a data-toggle="pill" href="#MisProductos">Productos</a></li>
+    <li><a data-toggle="pill" href="#promocion">promocion</a></li>
+    <li><a data-toggle="pill" href="#entregasPendientes">entregasPendientes</a></li>
+    <li><a data-toggle="pill" href="#vendidos">vendidos</a></li>
+    <li><a data-toggle="pill" href="#eliminados">eliminados</a></li>
+  </ul>
+<div class="tab-content">
+    <div id="MisProductos" class="tab-pane fade in active">
+      <h3>Listado de productos</h3>
+      <p>Este es una lista de tus productos en oferta en la plataforma </p>
+      <div class="row">
+      	<div class="col-md-8">
+      		<!--modal de registro-->
+      		<!--button data-toggle="collapse" data-target="#AgregarProducto" class="btn btn-default"><i class="glyphicon glyphicon-plus"></i> Agregar Nuevo Producto</button>
+			<div id="AgregarProducto" class="collapse" style="margin-top: 10px;">
+				<form action="" method="post">
+					<div class="form-group">
+						<label class="control-label">First Name:</label>
+						<input type="text" name="first_name" placeholder="Enter First Name" class="form-control" required>
+					</div>
+
+					<div class="form-group">
+						<label class="control-label">Last Name:</label>
+						<input type="text" name="last_name" placeholder="Enter Last Name" class="form-control" required>
+					</div>
+
+					<div class="form-group">
+						<label class="control-label">Email:</label>
+						<input type="text" name="email" placeholder="Enter Email" class="form-control" required>
+					</div>
+
+					<div class="form-group">
+						<label class="control-label">Mobile:</label>
+						<input type="text" name="mobile" placeholder="Enter Mobile Number" class="form-control" required>
+					</div>
+
+					<div class="form-group">
+						<input type="submit" name="submit" value="Submit" class="btn btn-primary">
+					</div>
+				</form>
+			</div>
+      		<!--finmodal de registro-->
+      		<!--listado de objeto-->
+      		<table class="table table-hover">
+			<thead>
+		      <tr class="active">
 				<td>#</td>
 				<td>nombre</td>
 				<td>categoria</td>
@@ -12,7 +61,7 @@
 				<td> imagen</td>
 				<td>Accciones</td>
 			</tr>
-		</thead>
+			</thead>
 		<tbody>
 		{% if object_list %} 
 		{% for producto in object_list %} 
@@ -24,17 +73,65 @@
 				<td>{{ producto.precio_por_unidad }}</td>
 				<td></td>
 				<td>
-					<a class="btn btn-primary" href="#">Editar</a>
-					<a class="btn btn-danger" href="#">eliminar</a>
+				  <a href="{% url 'productos:editar_producto' producto.id %}">Editando</a> |
+		          <a class="btn btn-info btn-sm" data-toggle="modal" data-target="#myModalEdit">
+		          	<i class="glyphicon glyphicon-pencil"></i> Editar</a> |
+		          <a data-toggle="modal" data-target="#myModalDelete" class="btn btn-danger btn-sm">
+		          	<i class="glyphicon glyphicon-trash"></i> eliminar</a>
 				</td>
+				
+				
 				
 			</tr>
 		{% endfor %}
+
 		{% else %}
 			<h1>no hay registros</h1>
 		{% endif %}
+		{% include 'edit_modal.html' %}
+		{% include 'delete_modal.html' %}
 		</tbody>
 	</table>
+      	</div>
+      </div>
+    </div>
+     <div id="promocion" class="tab-pane fade ">
+	     	<h3>Mis productos en promocion</h3>
+		      <p>Este es una lista de tus productos que estan en promocion en la plataforma </p>
+	      <div class="row">
+	      	<div class="col-md-8">
 
+	      	</div>
+	      </div>
+	  </div>
+	  <div id="entregasPendientes" class="tab-pane fade ">
+	     	<h3>Mi lista de Emtregas Pendientes</h3>
+		      <p>Este es una lista de tus productos que faltan por entregar</p>
+	      <div class="row">
+	      	<div class="col-md-8">
 
+	      	</div>
+	      </div>
+	  </div>
+     <div id="vendidos" class="tab-pane fade">
+     	<h3>Mis productos Vendidos</h3>
+		      <p>Este es una lista de tus productos que han sido vendidos </p>
+	      <div class="row">
+	      	<div class="col-md-8">
+	      		
+	      	</div>
+	      </div>
+     </div>
+     <div id="eliminados" class="tab-pane fade">
+     	<h3>Mis productos eliminados</h3>
+		      <p>Este es una lista de tus productos que han sido eliminados </p>
+	      <div class="row">
+	      	<div class="col-md-8">
+	      		
+	      	</div>
+     	</div>
+	  </div>
+  </div>
+</div>
+</div>
 {% endblock %}

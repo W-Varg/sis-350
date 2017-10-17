@@ -5,6 +5,7 @@ from django.db import models
 from uuid import uuid4
 from datetime import date
 import os
+from datetime import datetime
 
 """
 def seleccionar_imagen(instance, filename):
@@ -35,13 +36,30 @@ class Producto(models.Model):
 	nombre_producto = models.CharField(max_length=50)
 	#llave foranea de la tabla categoria
 	IDcategoria = models.ForeignKey(Categoria, on_delete=models.CASCADE, null=True, blank=True)
-	cantidad = models.PositiveSmallIntegerField()
-	precio_por_unidad = models.FloatField()
-	#descripcion = models.FloatField(max_length=500)
-	#fecha = models.DateTimeField(max_length=10)
-	#fotografia = models.ImageField(upload_to = seleccionar_imagen, height_field=None, width_field=None,null=True, blank=True)
+	cantidad = models.PositiveSmallIntegerField(default=1)
+	precio_por_unidad = models.FloatField(default=1)
+	descripcion = models.TextField(max_length=250)
+	fecha = models.DateTimeField(default=datetime.now(), blank=None, null=None)
+	fotografia = models.ImageField(upload_to = 'photos', null=True , blank=True)
+#	fotografia = models.BinaryField(blank=True)
+
 
 	def __unicode__(self):
-		return '{} '.format(self.nombre_producto)
+		return '{}'.format(self.nombre_producto)
+"""
+class Album(models.Model):
+    owner = models.ForeignKey('auth.User')
+    title = models.CharField(max_length=200)
+    timestamp = models.DateTimeField(auto_now_add=True, auto_now=False)
+    updated = models.DateTimeField(auto_now_add=False, auto_now=True)
 
+    def __unicode__(self,):
+        return self.title
 
+class AlbumImage(models.Model):
+    album = models.ForeignKey(Album, related_name='images')
+    image = models.ImageField(upload_to='albums/images/')
+
+    def __unicode__(self,):
+        return str(self.image)
+"""
